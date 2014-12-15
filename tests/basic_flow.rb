@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'diameter/stack'
+require 'diameter'
 require_relative "./get_config_from_env.rb"
 
 include Diameter
@@ -35,7 +35,7 @@ describe "OpenIMSCore HSS" do
     sar = Message.new(command_code: 301, app_id: 16777216, avps: sar_avps)
     saa = client_stack.send_request(sar).value
 
-    saa['Result-Code'][0].uint32.must_equal 2001
+    saa['Result-Code'].uint32.must_equal 2001
     sar_avps = [AVP.create("Vendor-Specific-Application-Id",
                            [AVP.create("Vendor-Id", 10415),
                             AVP.create("Auth-Application-Id", 16777216)]),
@@ -52,7 +52,7 @@ describe "OpenIMSCore HSS" do
     sar = Message.new(command_code: 301, app_id: 16777216, avps: sar_avps)
     saa = client_stack.send_request(sar).value
 
-    saa['Result-Code'][0].uint32.must_equal 2001
+    saa['Result-Code'].uint32.must_equal 2001
 
     uar_avps = [AVP.create("Session-Id", "one"),
                 AVP.create("Vendor-Specific-Application-Id",
@@ -68,7 +68,7 @@ describe "OpenIMSCore HSS" do
     uar = Message.new(command_code: 300, app_id: 16777216, avps: uar_avps)
     uaa = client_stack.send_request(uar).value
 
-    uaa['Experimental-Result'][0].inner_avp("Experimental-Result-Code").uint32.must_equal 2001
+    uaa['Experimental-Result'].inner_avp("Experimental-Result-Code").uint32.must_equal 2001
     required_avps = ["Session-Id", "Vendor-Specific-Application-Id", "Auth-Session-State", "Origin-Host", "Origin-Realm"]
 
     required_avps.each do |name|
@@ -92,7 +92,7 @@ describe "OpenIMSCore HSS" do
     mar = Message.new(command_code: 303, app_id: 16777216, avps: mar_avps)
     maa = client_stack.send_request(mar).value
 
-    maa['Result-Code'][0].uint32.must_equal 2001
+    maa['Result-Code'].uint32.must_equal 2001
 
     required_avps = ["Session-Id", "Vendor-Specific-Application-Id", "Auth-Session-State", "Origin-Host", "Origin-Realm", "SIP-Auth-Data-Item"]
 
@@ -117,7 +117,7 @@ describe "OpenIMSCore HSS" do
     sar = Message.new(command_code: 301, app_id: 16777216, avps: sar_avps)
     saa = client_stack.send_request(sar).value
 
-    saa['Result-Code'][0].uint32.must_equal 2001
+    saa['Result-Code'].uint32.must_equal 2001
 
     required_avps = ["Session-Id", "Vendor-Specific-Application-Id", "Auth-Session-State", "Origin-Host", "Origin-Realm", "User-Data"]
 
@@ -139,7 +139,7 @@ describe "OpenIMSCore HSS" do
     lir = Message.new(command_code: 302, app_id: 16777216, avps: lir_avps)
     lia = client_stack.send_request(lir).value
 
-    lia['Result-Code'][0].uint32.must_equal 2001
+    lia['Result-Code'].uint32.must_equal 2001
 
     required_avps = ["Session-Id", "Vendor-Specific-Application-Id", "Auth-Session-State", "Origin-Host", "Origin-Realm", "Server-Name"]
 

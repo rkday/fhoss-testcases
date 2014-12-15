@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require 'diameter/stack'
+require 'diameter'
 require_relative "./get_config_from_env.rb"
 
 include Diameter
@@ -71,7 +71,7 @@ describe "OpenIMSCore HSS" do
                ]
     pur = Message.new(command_code: 307, app_id: 16777217, avps: pur_avps)
     pua = @client_stack.send_request(pur).value
-    pua['Result-Code'][0].uint32.must_equal 2001
+    pua['Result-Code'].uint32.must_equal 2001
 
     udr_avps = [AVP.create("Session-Id", "one"),
                 AVP.create("Vendor-Specific-Application-Id",
@@ -88,7 +88,7 @@ describe "OpenIMSCore HSS" do
     udr = Message.new(command_code: 306, app_id: 16777217, avps: udr_avps)
     uda = @client_stack.send_request(udr).value
 
-    uda['Result-Code'][0].uint32.must_equal 2001
+    uda['Result-Code'].uint32.must_equal 2001
     uda.avp('Sh-User-Data').octet_string.must_include "shibboleth"
 
   end
@@ -132,7 +132,7 @@ describe "OpenIMSCore HSS" do
                ]
     pur = Message.new(command_code: 307, app_id: 16777217, avps: pur_avps)
     pua = @client_stack.send_request(pur).value
-    pua['Result-Code'][0].uint32.must_equal 2001
+    pua['Result-Code'].uint32.must_equal 2001
 
     udr_avps = [AVP.create("Session-Id", "one"),
                 AVP.create("Vendor-Specific-Application-Id",
@@ -149,7 +149,7 @@ describe "OpenIMSCore HSS" do
     udr = Message.new(command_code: 306, app_id: 16777217, avps: udr_avps)
     uda = @client_stack.send_request(udr).value
 
-    uda['Result-Code'][0].uint32.must_equal 2001
+    uda['Result-Code'].uint32.must_equal 2001
     uda.avp('Sh-User-Data').octet_string.must_include "<hello attr=\"six\">world</hello>"
   end
 end

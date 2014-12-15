@@ -3,12 +3,12 @@ GEM
   specs:
     concurrent-ruby (0.7.1)
       ref (~> 1.0.5)
-    diameter (0.1.0.pre2)
-      concurrent-ruby
+    diameter (0.1.0.pre4)
+      concurrent-ruby (~> 0.7)
     ref (1.0.5)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  diameter (= 0.1.0.pre2)
+  diameter (= 0.1.0.pre4)

@@ -1,14 +1,8 @@
 require 'minitest/autorun'
 require 'diameter/stack'
+require_relative "./get_config_from_env.rb"
 
 include Diameter
-
-HSS_URI = "aaa://54.77.111.35:3868"
-HSS_ID = "hss.open-ims.test"
-HSS_REALM = "open-ims.test"
-
-IMPU = "sip:alice@open-ims.test"
-IMPI = "alice@open-ims.test"
 
 AVP.define("Visited-Network-Identifier", 600, :OctetString, 10415)
 AVP.define("User-Data-Already-Available", 624, :Unsigned32, 10415)
@@ -27,7 +21,7 @@ end
 
 describe "OpenIMSCore HSS" do
   before do
-    @client_stack = Stack.new("presence.open-ims.test", "my-realm")
+    @client_stack = Stack.new(ORIGIN_HOST, ORIGIN_REALM)
     @client_stack.add_handler(16777217, auth: true, vendor: 10415) { nil }
     @client_stack.start
     peer = @client_stack.connect_to_peer(HSS_URI, HSS_ID, HSS_REALM)

@@ -6,7 +6,7 @@ This is a Diameter test suite for exercising the 3GPP Cx and Sh interfaces. It w
 
 All configuration of this test suite happens through environment variables set on the command line, e.g.:
 
-`ruby tests/basic_flow.rb HSS_IP=1.2.3.4`
+`HSS_IP=1.2.3.4 ruby tests/basic_flow.rb`
 
 * HSS_IP - the IP address of the HSS to test
 * HSS_PORT - the port of the HSS to test (defaults to 3868)

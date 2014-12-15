@@ -89,7 +89,7 @@ describe "OpenIMSCore HSS" do
     uda = @client_stack.send_request(udr).value
 
     uda['Result-Code'][0].uint32.must_equal 2001
-    puts uda.avp('Sh-User-Data')
+    uda.avp('Sh-User-Data').octet_string.must_include "shibboleth"
 
   end
 
@@ -150,6 +150,6 @@ describe "OpenIMSCore HSS" do
     uda = @client_stack.send_request(udr).value
 
     uda['Result-Code'][0].uint32.must_equal 2001
-    puts uda.avp('Sh-User-Data').octet_string
+    uda.avp('Sh-User-Data').octet_string.must_include "<hello attr=\"six\">world</hello>"
   end
 end

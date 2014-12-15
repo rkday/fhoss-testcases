@@ -2,6 +2,8 @@
 
 This is a Diameter test suite for exercising the 3GPP Cx and Sh interfaces. It was originally developed to reproduce bugs in the OpenIMSCore HSS (a.k.a. FHoSS) and confirm that they are fixed. However, it exercises standard, well-defined interfaces over an open protocol, so there's no reason it shouldn't work with other HSSes. However, it hasn't been tested with other HSSes and may rely on quirks of FHoSS implementation.
 
+You can get started by checking the code out and running "bundle install" to install [the Diameter stack it depends on](https://github.com/rkday/ruby-diameter).
+
 ## Configuration
 
 All configuration of this test suite happens through environment variables set on the command line, e.g.:

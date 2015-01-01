@@ -4,13 +4,6 @@ require_relative "./get_config_from_env.rb"
 
 include Diameter
 
-AVP.define("Visited-Network-Identifier", 600, :OctetString, 10415)
-AVP.define("User-Data-Already-Available", 624, :Unsigned32, 10415)
-AVP.define("Server-Assignment-Type", 614, :Unsigned32, 10415)
-AVP.define("User-Data", 606, :OctetString, 10415)
-AVP.define("Experimental-Result", 297, :Grouped, 0)
-AVP.define("Experimental-Result-Code", 298, :Unsigned32, 0)
-
 describe "OpenIMSCore HSS" do
   it "should still allow LIRs after an authentication failure" do
     client_stack = Stack.new(ORIGIN_HOST, ORIGIN_REALM)

@@ -4,13 +4,6 @@ require_relative "./get_config_from_env.rb"
 
 include Diameter
 
-AVP.define("Visited-Network-Identifier", 600, :OctetString, 10415)
-AVP.define("User-Data-Already-Available", 624, :Unsigned32, 10415)
-AVP.define("Server-Assignment-Type", 614, :Unsigned32, 10415)
-AVP.define("User-Data", 606, :OctetString, 10415)
-AVP.define("Experimental-Result", 297, :Grouped, 0)
-AVP.define("Experimental-Result-Code", 298, :Unsigned32, 0)
-
 describe "OpenIMSCore HSS" do
   it "should handle the four key flows in the usual order - UAR, MAR, SAR, LIR" do
     client_stack = Stack.new(ORIGIN_HOST, ORIGIN_REALM)
@@ -125,7 +118,7 @@ describe "OpenIMSCore HSS" do
       saa.avp(name).wont_be_nil
     end
 
-    puts saa.avp('User-Data').octet_string
+    puts saa['User-Data'].octet_string
 
     lir_avps = [AVP.create("Vendor-Specific-Application-Id",
                            [AVP.create("Vendor-Id", 10415),

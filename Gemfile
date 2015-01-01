@@ -1,3 +1,3 @@
 source 'https://rubygems.org'
 
-gem "diameter", "0.1.0"
+gem "diameter", "0.2.0pre1"

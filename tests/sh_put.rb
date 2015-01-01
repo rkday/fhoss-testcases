@@ -4,17 +4,6 @@ require_relative "./get_config_from_env.rb"
 
 include Diameter
 
-AVP.define("Visited-Network-Identifier", 600, :OctetString, 10415)
-AVP.define("User-Data-Already-Available", 624, :Unsigned32, 10415)
-AVP.define("Server-Assignment-Type", 614, :Unsigned32, 10415)
-AVP.define("User-Data", 606, :OctetString, 10415)
-AVP.define("Sh-User-Data", 702, :OctetString, 10415)
-AVP.define("Service-Indication", 704, :OctetString, 10415)
-AVP.define("User-Identity", 700, :Grouped, 10415)
-AVP.define("Data-Reference", 703, :Unsigned32, 10415)
-AVP.define("Experimental-Result", 297, :Grouped, 0)
-AVP.define("Experimental-Result-Code", 298, :Unsigned32, 0)
-
 def wrap_sh_data(string, service_indication, seqn)
   "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Sh-Data xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"ShDataType.xsd\"><RepositoryData><ServiceIndication>#{service_indication}</ServiceIndication><SequenceNumber>#{seqn}</SequenceNumber><ServiceData><Data>#{string}</Data></ServiceData></RepositoryData></Sh-Data>"
 end
@@ -48,7 +37,7 @@ describe "OpenIMSCore HSS" do
     udr = Message.new(command_code: 306, app_id: 16777217, avps: udr_avps)
     uda = @client_stack.send_request(udr).value(1)
 
-    data = uda ? uda.avp('Sh-User-Data') : nil
+    data = uda ? uda['Sh-User-Data'] : nil
     seq = if data.nil?
             0
           elsif /<SequenceNumber>(\d+)<\/SequenceNumber>/.match(data.octet_string)
@@ -89,7 +78,7 @@ describe "OpenIMSCore HSS" do
     uda = @client_stack.send_request(udr).value
 
     uda['Result-Code'].uint32.must_equal 2001
-    uda.avp('Sh-User-Data').octet_string.must_include "shibboleth"
+    uda['Sh-User-Data'].octet_string.must_include "shibboleth"
 
   end
 
@@ -109,7 +98,7 @@ describe "OpenIMSCore HSS" do
     udr = Message.new(command_code: 306, app_id: 16777217, avps: udr_avps)
     uda = @client_stack.send_request(udr).value(1)
 
-    data = uda ? uda.avp('Sh-User-Data') : nil
+    data = uda ? uda['Sh-User-Data'] : nil
     seq = if data.nil?
             0
           elsif /<SequenceNumber>(\d+)<\/SequenceNumber>/.match(data.octet_string)
@@ -150,6 +139,6 @@ describe "OpenIMSCore HSS" do
     uda = @client_stack.send_request(udr).value
 
     uda['Result-Code'].uint32.must_equal 2001
-    uda.avp('Sh-User-Data').octet_string.must_include "<hello attr=\"six\">world</hello>"
+    uda['Sh-User-Data'].octet_string.must_include "<hello attr=\"six\">world</hello>"
   end
 end
